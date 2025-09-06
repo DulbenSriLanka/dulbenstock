@@ -1,324 +1,335 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>DULBEN SPICES • Sri Lanka | Export & Local</title>
-  <meta name="description" content="DULBEN SPICES Sri Lanka – 100% natural Ceylon spices. Export & local market. COD island‑wide. Bulk worldwide. WhatsApp to order." />
-  <style>
-    :root{
-      /* Spice-inspired palette */
-      --bg:#0b0c0f; /* pepper black */
-      --card:#11131a; /* dark card */
-      --line:#242735;
-      --text:#eef1f6;
-      --muted:#a6acb3;
-      --chili:#b00000; /* chili red */
-      --paprika:#ff3b30;
-      --turmeric:#d4af37; /* gold */
-      --leaf:#25d366; /* green - whatsapp */
-      --radius:20px;
-      --shadow:0 16px 40px rgba(0,0,0,.28);
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;background:radial-gradient(140% 120% at 10% 0%, rgba(212,175,55,.07), transparent 60%),linear-gradient(160deg,#0b0c0f 0%,#151a23 100%);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;line-height:1.65}
-    a{color:inherit;text-decoration:none}
-    .container{max-width:1150px;margin:auto;padding:20px}
-    /* Top bar */
-    .top{display:flex;align-items:center;justify-content:space-between;gap:12px}
-    .lang-switch{display:flex;gap:8px}
-    .chip{padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#0f1117;color:var(--muted);cursor:pointer;font-weight:700}
-    .chip.active{background:linear-gradient(135deg,var(--chili),var(--paprika));color:#fff;border-color:transparent}
-
-    /* 3D brand heading */
-    .hero{margin-top:22px;display:grid;grid-template-columns:1.1fr .9fr;gap:22px;align-items:center}
-    .card{background:linear-gradient(180deg,#141824 0%,#0f131c 100%);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}
-    .hero-left{padding:26px}
-    .brand3d{font-size:clamp(34px,5vw,64px);font-weight:900;letter-spacing:.6px;line-height:1.05;margin:0 0 6px;position:relative;color:#fff;
-      text-shadow:
-        0 1px 0 rgba(0,0,0,.35),
-        0 2px 0 rgba(0,0,0,.30),
-        0 3px 0 rgba(0,0,0,.25),
-        0 4px 0 rgba(0,0,0,.22),
-        0 5px 0 rgba(0,0,0,.18),
-        0 6px 12px rgba(176,0,0,.45);
-      background:linear-gradient(180deg,#ffffff 0%, #ffe8b0 35%, #f4d26a 60%, #e7b735 100%);
-      -webkit-background-clip:text;background-clip:text;color:transparent;
-    }
-    .brand3d small{display:block;font-size:clamp(13px,1.6vw,16px);font-weight:800;letter-spacing:1px;color:var(--muted);-webkit-text-fill-color:var(--muted)}
-    .tagline{font-size:clamp(18px,2.5vw,24px);margin:10px 0 12px;color:#f8ead0}
-    .muted{color:var(--muted)}
-    .badges{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-    .badge{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#0f1219}
-    .dot{width:8px;height:8px;border-radius:50%}
-
-    .hero-cta{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px}
-    .btn{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:16px;border:1px solid var(--line);background:#121624;color:#fff;font-weight:800;box-shadow:0 10px 22px rgba(0,0,0,.22)}
-    .btn.primary{background:linear-gradient(135deg,var(--chili),var(--paprika));border-color:transparent}
-    .btn.wa{background:#122016;border-color:#1f3527;color:#e8ffee}
-
-    .hero-right{padding:0;display:grid;place-items:center}
-    .illus{width:94%;min-height:280px;margin:14px;background:conic-gradient(from 0deg at 50% 50%, rgba(176,0,0,.22), rgba(212,175,55,.22), rgba(255,59,48,.18), rgba(176,0,0,.22));border-radius:var(--radius);border:1px dashed var(--line);display:grid;place-items:center}
-    .illus > div{padding:16px;text-align:center;color:#d7dbe2}
-
-    /* Sections */
-    .section{margin-top:36px}
-    .title{font-size:clamp(22px,3vw,30px);margin:0 0 6px}
-    .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-    @media (max-width:900px){.hero{grid-template-columns:1fr}.grid{grid-template-columns:repeat(2,1fr)}}
-    @media (max-width:620px){.grid{grid-template-columns:1fr}}
-
-    .tile{padding:16px}
-    .pill{display:inline-block;padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:#111522;font-size:13px;margin:4px}
-
-    .sizes{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
-
-    .footer{margin:40px 0 20px;border-top:1px solid var(--line);padding-top:16px;color:var(--muted);display:flex;gap:10px;flex-wrap:wrap;justify-content:space-between}
-
-    /* Language modal */
-    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:none;place-items:center;z-index:50}
-    .overlay.show{display:grid}
-    .modal{width:min(560px,92%);background:linear-gradient(180deg,#151a24,#0f131c);border:1px solid var(--line);border-radius:20px;box-shadow:var(--shadow);padding:20px}
-    .modal h3{margin:0 0 6px}
-    .lang-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-    .lang-btn{padding:14px;border-radius:14px;border:1px solid var(--line);background:#0f1219;color:#fff;font-weight:900;cursor:pointer}
-    .lang-btn:hover{outline:2px solid rgba(212,175,55,.4)}
-
-    /* Floating WhatsApp */
-    .wa-float{position:fixed;right:18px;bottom:18px;z-index:40}
-    .wa-btn{display:flex;align-items:center;gap:10px;background:var(--leaf);color:#0b2615;padding:14px 16px;border-radius:999px;font-weight:900;border:none;cursor:pointer;box-shadow:0 16px 30px rgba(0,0,0,.35)}
-    .wa-btn svg{width:22px;height:22px}
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Dulben Spices — Stock Manager</title>
+<style>
+  :root{
+    --bg:#0f1724; --card:#0b1220; --muted:#94a3b8; --accent:#ef4444;
+    --accent-2:#fbbf24; --glass: rgba(255,255,255,0.04);
+  }
+  *{box-sizing:border-box;font-family:Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;}
+  body{margin:0; background: linear-gradient(180deg,#071129 0%, #071a2b 100%); color:#e6eef6; padding:28px;}
+  .wrap{max-width:1100px;margin:0 auto}
+  header{display:flex;align-items:center;gap:16px;margin-bottom:18px}
+  .brand{display:flex;gap:12px;align-items:center}
+  .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#d63384);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;box-shadow: 0 6px 20px rgba(0,0,0,0.6)}
+  h1{margin:0;font-size:20px}
+  p.lead{margin:0;color:var(--muted);font-size:13px}
+  .controls{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+  .card{background:var(--card);padding:14px;border-radius:12px;box-shadow: 0 6px 18px rgba(3,7,18,0.6);border:1px solid rgba(255,255,255,0.02)}
+  .search{padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.04);background:var(--glass);color:inherit}
+  button.btn{background:linear-gradient(90deg,var(--accent),#f97316);border:none;padding:8px 12px;border-radius:10px;color:white;cursor:pointer;font-weight:600}
+  button.ghost{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px 12px;border-radius:10px;color:var(--muted);cursor:pointer}
+  .tools{display:flex;gap:8px;margin-left:auto}
+  table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px}
+  th,td{padding:10px 8px;text-align:left;border-bottom:1px dashed rgba(255,255,255,0.03)}
+  th{color:var(--muted);font-weight:600;font-size:13px}
+  td .num{display:inline-block;min-width:44px;text-align:right;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);cursor:pointer}
+  td .num[contenteditable="true"]:focus{outline:2px solid rgba(99,102,241,0.14);background:rgba(255,255,255,0.03)}
+  .small{font-size:12px;color:var(--muted)}
+  .totals{margin-top:12px;display:flex;gap:12px;align-items:center}
+  .pill{background:linear-gradient(90deg,var(--accent-2),#84cc16);padding:8px 12px;border-radius:999px;color:#071129;font-weight:700}
+  .muted{color:var(--muted)}
+  .row-actions{display:flex;gap:6px;align-items:center}
+  .danger{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:6px;border-radius:8px;color:#ffb4b4;cursor:pointer}
+  .add-form{display:grid;grid-template-columns:1fr repeat(5,110px) 120px;gap:8px;align-items:center;margin-top:12px}
+  .input, input[type="text"]{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:inherit}
+  @media (max-width:900px){
+    .add-form{grid-template-columns:1fr 1fr; gap:8px}
+    .tools{width:100%;margin-top:8px}
+  }
+  footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+</style>
 </head>
 <body>
-  <div class="container">
-    <!-- Top bar -->
-    <div class="top">
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">DS</div>
       <div>
-        <div class="brand3d">DULBEN SPICES SRI LANKA<small id="subBrand">Export & Local • 100% Natural</small></div>
-      </div>
-      <div class="lang-switch" aria-label="Language">
-        <button class="chip" data-lang="si">සිංහල</button>
-        <button class="chip" data-lang="en">English</button>
-        <button class="chip" data-lang="ta">தமிழ்</button>
+        <h1>Dulben Spices — Stock Manager</h1>
+        <p class="lead">Simple offline stock manager. Save changes locally (browser) • Export CSV • Print</p>
       </div>
     </div>
-
-    <!-- Hero -->
-    <section class="hero">
-      <div class="hero-left card">
-        <div class="tagline" data-i18n="tagline">The true taste of Ceylon, crafted for your customers.</div>
-        <p class="muted" data-i18n="intro">With 7+ years of experience as a trusted export company, we deliver premium, chemical‑free Ceylon spices. We serve both export and the Sri Lankan local market with island‑wide Cash on Delivery.</p>
-        <div class="badges">
-          <div class="badge"><span class="dot" style="background:var(--turmeric)"></span><span data-i18n="b1">Export & Local</span></div>
-          <div class="badge"><span class="dot" style="background:var(--paprika)"></span><span data-i18n="b2">100% Natural</span></div>
-          <div class="badge"><span class="dot" style="background:var(--leaf)"></span><span data-i18n="b3">COD Island‑wide</span></div>
-          <div class="badge"><span class="dot" style="background:#fff"></span><span data-i18n="b4">7+ Years</span></div>
-        </div>
-        <div class="hero-cta">
-          <a class="btn primary" href="https://wa.me/94764480950?text=Hi%20Dulben!%20I%20want%20to%20order%20(retail)" target="_blank" rel="noopener" data-i18n="ctaRetail">Order on WhatsApp</a>
-          <a class="btn wa" href="https://wa.me/94778512535?text=Hello%20Dulben!%20Bulk%20export%20inquiry" target="_blank" rel="noopener" data-i18n="ctaExport">Bulk Export Inquiry</a>
-        </div>
-      </div>
-      <div class="hero-right card">
-        <div class="illus">
-          <div data-i18n="illus">No photos used. Clean, trustworthy and fast. Your order starts here.</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Trust / Why Dulben -->
-    <section class="section" id="why">
-      <h2 class="title" data-i18n="whyTitle">Why Choose DULBEN?</h2>
-      <div class="grid">
-        <div class="card tile">
-          <h3 data-i18n="w1t">Export Standards</h3>
-          <p class="muted" data-i18n="w1d">Hygienic processing, consistent quality control, full documentation for global shipments.</p>
-        </div>
-        <div class="card tile">
-          <h3 data-i18n="w2t">Retail‑Ready</h3>
-          <p class="muted" data-i18n="w2d">Island‑wide COD, attractive packs, and long‑term showcase support for partners.</p>
-        </div>
-        <div class="card tile">
-          <h3 data-i18n="w3t">Community Care</h3>
-          <p class="muted" data-i18n="w3d">A share of every pack supports children’s homes and elders’ homes in Sri Lanka.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Products / Sizes -->
-    <section class="section" id="products">
-      <h2 class="title" data-i18n="prodTitle">Spice Range & Packaging</h2>
-      <p class="muted" data-i18n="prodList">Chili Powder • Black Pepper • Turmeric • Curry Powder • Roasted Curry Powder • Chili Pieces</p>
-      <div class="sizes">
-        <span class="pill">50g</span>
-        <span class="pill">100g</span>
-        <span class="pill">250g</span>
-        <span class="pill">500g</span>
-        <span class="pill">1kg</span>
-      </div>
-    </section>
-
-    <!-- Export (English focus but localized) -->
-    <section class="section" id="export">
-      <h2 class="title" data-i18n="expTitle">Bulk Export — Worldwide</h2>
-      <div class="grid">
-        <div class="card tile">
-          <p data-i18n="expTxt">We export premium Ceylon spices in bulk to distributors, brands and manufacturers worldwide. Custom packing, private label, competitive pricing, and timely delivery.</p>
-          <ul style="margin:8px 0 0 18px">
-            <li data-i18n="expLi1">Private label & custom packaging</li>
-            <li data-i18n="expLi2">Flexible MOQs, samples on request</li>
-            <li data-i18n="expLi3">Full export documentation & compliance</li>
-          </ul>
-          <div class="hero-cta" style="margin-top:10px">
-            <a class="btn wa" href="https://wa.me/601139864510?text=Hello%20Dulben!%20Export%20inquiry" target="_blank" rel="noopener" data-i18n="ctaCeo">WhatsApp CEO (Export)</a>
-            <a class="btn" href="mailto:DULBENPRODUCTS@gmail.com?subject=Bulk%20Export%20Inquiry" data-i18n="ctaEmail">Email Export</a>
-          </div>
-        </div>
-        <div class="card tile">
-          <h3 data-i18n="localTitle">Local Market — Sri Lanka</h3>
-          <p class="muted" data-i18n="localTxt">We supply the Sri Lankan market with island‑wide Cash on Delivery. Join as a shop partner or agency and get attractive commissions and free showcase guidance.</p>
-          <div class="hero-cta" style="margin-top:10px">
-            <a class="btn primary" href="https://wa.me/94778622434?text=Hi%20Dulben!%20Retail%20order%20/Agency%20inquiry" target="_blank" rel="noopener" data-i18n="ctaRetail2">Retail / Agency WhatsApp</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contact / Address -->
-    <section class="section" id="contact">
-      <h2 class="title" data-i18n="contactTitle">Contact</h2>
-      <div class="grid">
-        <div class="card tile">
-          <p><strong data-i18n="cPhones">Phones</strong><br>
-            +94 76 448 0950 • +94 77 851 2535 • +94 77 862 2434</p>
-          <p><strong>CEO</strong><br> +60 11 3986 4510</p>
-          <p><strong>Email</strong><br> <a href="mailto:DULBENPRODUCTS@gmail.com">DULBENPRODUCTS@gmail.com</a></p>
-          <p><strong data-i18n="addr">Address</strong><br> 120/5 Dimuthu, Uggalboda, Kalutara North, Kalutara South, Sri Lanka</p>
-        </div>
-        <div class="card tile">
-          <h3 data-i18n="orderNow">Ready to Order?</h3>
-          <p class="muted" data-i18n="orderTxt">Send us a WhatsApp now. Fast response, clear pricing, and reliable delivery.</p>
-          <div class="hero-cta">
-            <a class="btn primary" href="https://wa.me/94764480950?text=Hi%20Dulben!%20Order%20now" target="_blank" rel="noopener" data-i18n="ctaRetail3">Order Now (WhatsApp)</a>
-            <a class="btn wa" href="https://wa.me/94778512535?text=Hi%20Dulben!%20Retail%20order" target="_blank" rel="noopener" data-i18n="ctaRetail4">WhatsApp Support</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="footer">
-      <div>© <span id="y"></span> DULBEN SPICES. <span data-i18n="rights">All rights reserved.</span></div>
-      <div class="muted">No photos used • Clean & fast • Designed for trust</div>
-    </footer>
-  </div>
-
-  <!-- Floating WhatsApp quick CTA -->
-  <div class="wa-float">
-    <a class="wa-btn" href="https://wa.me/94764480950?text=Hi%20Dulben!%20Order%20now" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-      <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M19.11 17.14c-.27-.14-1.6-.8-1.84-.89-.25-.09-.43-.14-.62.14-.18.27-.71.89-.87 1.08-.16.18-.32.2-.59.07-1.6-.8-2.65-1.43-3.7-3.25-.28-.48.27-.45.77-1.5.09-.18.05-.34-.02-.48-.07-.14-.62-1.49-.85-2.03-.22-.52-.44-.45-.62-.46h-.53c-.18 0 -.48.07-.73.34-.25.27-.96.94-.96 2.28s.99 2.64 1.13 2.82c.14.18 1.95 2.98 4.73 4.18.66.29 1.17.46 1.57.59.66.21 1.25.18 1.72.11.52-.08 1.6-.65 1.83-1.28.23-.63.23-1.17.16-1.28-.07-.11-.25-.18-.52-.32z"/></svg>
-      <span data-i18n="ctaQuick">WhatsApp Now</span>
-    </a>
-  </div>
-
-  <!-- Language Modal -->
-  <div class="overlay" id="langOverlay" role="dialog" aria-modal="true">
-    <div class="modal">
-      <h3 id="modalTitle">Choose your language</h3>
-      <p class="muted" id="modalSub">Select one to continue. You can switch anytime.</p>
-      <div class="lang-grid">
-        <button class="lang-btn" data-lang="si">සිංහල</button>
-        <button class="lang-btn" data-lang="en">English</button>
-        <button class="lang-btn" data-lang="ta">தமிழ்</button>
-      </div>
+    <div class="tools" style="margin-left:auto">
+      <input id="search" class="search" placeholder="Search product or size..." />
+      <button class="ghost" id="resetBtn" title="Reset to initial data">Reset</button>
+      <button class="ghost" id="saveBtn" title="Save to browser">Save</button>
+      <button class="btn" id="exportBtn">Export CSV</button>
     </div>
+  </header>
+
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
+      <div class="small muted">Columns: product — 100g — 250g — 500g — 1kg — Other — Actions</div>
+      <div style="margin-left:auto" class="small muted">Tip: Click a number to edit. Press Enter to commit.</div>
+    </div>
+
+    <table id="stockTable" class="card">
+      <thead>
+        <tr>
+          <th style="width:34%">Product</th>
+          <th>100g</th>
+          <th>250g</th>
+          <th>500g</th>
+          <th>1kg</th>
+          <th>Other</th>
+          <th style="width:120px">Total</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody"></tbody>
+    </table>
+
+    <div class="totals">
+      <div class="pill" id="grandTotal">Total items: 0</div>
+      <div class="muted" id="lastSaved">Not saved</div>
+    </div>
+
+    <form id="addForm" class="add-form" onsubmit="return false">
+      <input id="newName" class="input" placeholder="New product name (e.g., Black Pepper)" required />
+      <input id="v100" class="input" placeholder="100g (qty)" type="number" min="0" value="0"/>
+      <input id="v250" class="input" placeholder="250g (qty)" type="number" min="0" value="0"/>
+      <input id="v500" class="input" placeholder="500g (qty)" type="number" min="0" value="0"/>
+      <input id="v1kg" class="input" placeholder="1kg (qty)" type="number" min="0" value="0"/>
+      <input id="vother" class="input" placeholder="Other packs (qty)" type="number" min="0" value="0"/>
+      <div style="display:flex;gap:8px">
+        <button id="addBtn" class="btn" style="width:100%">Add product</button>
+      </div>
+    </form>
+
   </div>
 
-  <script>
-    // Year
-    document.getElementById('y').textContent=new Date().getFullYear();
+  <footer>
+    <div>Preloaded from your list. Changes stored locally in this browser. If you want a sharable online version later I can prepare a GitHub Pages deploy.</div>
+  </footer>
+</div>
 
-    // i18n strings
-    const I18N={
-      en:{
-        tagline:"The true taste of Ceylon, crafted for your customers.",
-        intro:"With 7+ years of experience as a trusted export company, we deliver premium, chemical‑free Ceylon spices. We serve both export and the Sri Lankan local market with island‑wide Cash on Delivery.",
-        b1:"Export & Local", b2:"100% Natural", b3:"COD Island‑wide", b4:"7+ Years",
-        illus:"No photos used. Clean, trustworthy and fast. Your order starts here.",
-        whyTitle:"Why Choose DULBEN?",
-        w1t:"Export Standards", w1d:"Hygienic processing, consistent quality control, full documentation for global shipments.",
-        w2t:"Retail‑Ready", w2d:"Island‑wide COD, attractive packs, and long‑term showcase support for partners.",
-        w3t:"Community Care", w3d:"A share of every pack supports children’s homes and elders’ homes in Sri Lanka.",
-        prodTitle:"Spice Range & Packaging", prodList:"Chili Powder • Black Pepper • Turmeric • Curry Powder • Roasted Curry Powder • Chili Pieces",
-        expTitle:"Bulk Export — Worldwide", expTxt:"We export premium Ceylon spices in bulk to distributors, brands and manufacturers worldwide. Custom packing, private label, competitive pricing, and timely delivery.",
-        expLi1:"Private label & custom packaging", expLi2:"Flexible MOQs, samples on request", expLi3:"Full export documentation & compliance",
-        localTitle:"Local Market — Sri Lanka", localTxt:"We supply the Sri Lankan market with island‑wide Cash on Delivery. Join as a shop partner or agency and get attractive commissions and free showcase guidance.",
-        contactTitle:"Contact", cPhones:"Phones", addr:"Address", rights:"All rights reserved.",
-        orderNow:"Ready to Order?", orderTxt:"Send us a WhatsApp now. Fast response, clear pricing, and reliable delivery.",
-        ctaRetail:"Order on WhatsApp", ctaExport:"Bulk Export Inquiry", ctaCeo:"WhatsApp CEO (Export)", ctaEmail:"Email Export", ctaRetail2:"Retail / Agency WhatsApp", ctaRetail3:"Order Now (WhatsApp)", ctaRetail4:"WhatsApp Support", ctaQuick:"WhatsApp Now"
-      },
-      si:{
-        tagline:"ලංකාවේ සත්‍ය රසය – ඔබේ customers ලාට විශ්වාසයෙන්.",
-        intro:"අවුරුදු 7ට අධික අත්දැකීමකින්, අපි export company එකක් ලෙස 100% natural, chemical‑free Ceylon spices ලබා දෙනවා. Export මෙන්ම ලංකා local market එකටත් COD සේවාව.",
-        b1:"Export & Local", b2:"100% Natural", b3:"රට පුරා COD", b4:"අවුරුදු 7+",
-        illus:"ඡායාරූප නොමැති සරල, විශ්වාසදායක, ඉක්මන් අත්දැකීම. ඔබේ order එක මෙතැනින්!",
-        whyTitle:"ඇයි DULBEN?",
-        w1t:"Export Standards", w1d:"ශුචිමත් සැකසුම්, තත්ත්ව පාලනය, ගෝලීය නව්‍යකරණ ලේඛන සමග ප්‍රස්ථාපන.",
-        w2t:"Retail‑Ready", w2d:"රට පුරා COD, ආකර්ෂණීය පැකේජ, දිගුකාලීන showcase support.",
-        w3t:"Community Care", w3d:"හැම packet එකකින්ම ළමා නිවාස හා වැඩිහිටි නිවාස සඳහා සහය.",
-        prodTitle:"මසුලා පෙළ & පැකේජ", prodList:"Chili Powder • Black Pepper • Turmeric • Curry Powder • Roasted Curry Powder • Chili Pieces",
-        expTitle:"Bulk Export — ලෝකයට", expTxt:"ලෝකයේ විතුකරුවන්ට, brand හා factory වලට අපි bulk ලෙස උසස් තත්ත්ව Ceylon spices සපයනවා. Custom pack, private label, සාධාරණ මිල, ව زمانی බෙදා හැරීම.",
-        expLi1:"Private label & custom packaging", expLi2:"අඩු MOQs • samples ලබාදෙමු", expLi3:"අවශ්‍ය සියලු export ලේඛන",
-        localTitle:"Local Market — ශ්‍රී ලංකාව", localTxt:"රට පුරා COD. Shop partner / agency ලෙස එකතු වෙලා attractive commission සහ showcase support එකත් ලබාගන්න.",
-        contactTitle:"සම්බන්ධ වන්න", cPhones:"දුරකථන", addr:"ලිපිනය", rights:"සියළු හිමිකම් ඇවිරිඹී ඇත.",
-        orderNow:"Order කරන්න සූදානම් ද?", orderTxt:"දැන්ම WhatsApp කරන්න. ඉක්මන් පිලිතුරු, පැහැදිලි මිල ගණන්, විශ්වාසදායක බෙදා හැරීම.",
-        ctaRetail:"WhatsApp Order", ctaExport:"Bulk Export විමසුම", ctaCeo:"WhatsApp CEO (Export)", ctaEmail:"Email Export", ctaRetail2:"Retail / Agency WhatsApp", ctaRetail3:"දැන්ම Order කරන්න", ctaRetail4:"WhatsApp Support", ctaQuick:"දැන්ම WhatsApp"
-      },
-      ta:{
-        tagline:"சிலோனின் உண்மையான சுவை – உங்கள் வாடிக்கையாளர்களுக்காக.",
-        intro:"7+ ஆண்டுகள் அனுபவத்துடன், நாங்கள் 100% இயற்கை, ரசாயனமில்லா சிலோன் மசாலாக்களை வழங்குகிறோம். ஏற்றுமதி மற்றும் இலங்கை உள்ளூர் சந்தைக்கு COD சேவை.",
-        b1:"ஏற்றுமதி & உள்ளூர்", b2:"100% இயற்கை", b3:"நாடு முழுவதும் COD", b4:"7+ ஆண்டுகள்",
-        illus:"புகைப்படங்கள் இல்லை. சுத்தமான, நம்பகமான, வேகமான அனுபவம். உங்கள் ஆர்டர் இங்கிருந்து!",
-        whyTitle:"ஏன் DULBEN?",
-        w1t:"ஏற்றுமதி தரநிலைகள்", w1d:"சுத்தமான செயலாக்கம், தரக்கட்டுப்பாடு, சர்வதேச அனுப்பலுக்கான ஆவணங்கள்.",
-        w2t:"சில்லறைக்கு தயாரானது", w2d:"நாடு முழுவதும் COD, கவர்ச்சியான பாக்குகள், நீண்டகால ஷோரூம் ஆதரவு.",
-        w3t:"சமூக பரிவு", w3d:"ஒவ்வொரு பாக்கிலும் இலங்கை குழந்தைகள் & முதியோர் இல்லங்களுக்கு ஆதரவு.",
-        prodTitle:"மசாலா வரம்பும் பாக்கிங்கும்", prodList:"Chili Powder • Black Pepper • Turmeric • Curry Powder • Roasted Curry Powder • Chili Pieces",
-        expTitle:"மொத்த ஏற்றுமதி — உலகம் முழுவதும்", expTxt:"பங்காளிகள், பிராண்டுகள், உற்பத்தியாளர்களுக்கு உயர்தர சிலோன் மசாலாக்களை மொத்தமாக ஏற்றுமதி செய்கிறோம். தனிப்பயன் பாக்கிங், தனியார் லேபல், போட்டித்தன்மை விலை, நேரமையான டெலிவரி.",
-        expLi1:"பிரைவேட் லேபல் & கஸ்டம் பாக்கிங்", expLi2:"நெகிழ்வான MOQகள், மாதிரிகள் கிடைக்கும்", expLi3:"முழு ஏற்றுமதி ஆவணங்கள் & இணக்கம்",
-        localTitle:"உள்ளூர் சந்தை — இலங்கை", localTxt:"இலங்கையில் COD. கடை கூட்டாளி/ஏஜென்சியாக சேர்ந்து கமிஷன் மற்றும் ஷோரூம் ஆதரவைப் பெறுங்கள்.",
-        contactTitle:"தொடர்பு", cPhones:"தொலைபேசி", addr:"முகவரி", rights:"அனைத்து உரிமைகளும் பாதுகாக்கப்பட்டவை.",
-        orderNow:"ஆர்டர் செய்ய தயாரா?", orderTxt:"இப்போது WhatsApp செய்யுங்கள். விரைவு பதில், தெளிவான விலை, நம்பகமான டெலிவரி.",
-        ctaRetail:"WhatsApp ஆர்டர்", ctaExport:"மொத்த ஏற்றுமதி விசாரணை", ctaCeo:"WhatsApp CEO (ஏற்றுமதி)", ctaEmail:"மின்னஞ்சல் ஏற்றுமதி", ctaRetail2:"சில்லறை / ஏஜென்சி WhatsApp", ctaRetail3:"இப்போது ஆர்டர் செய்யுங்கள்", ctaRetail4:"WhatsApp ஆதரவு", ctaQuick:"WhatsApp இப்போது"
-      }
-    };
+<script>
+/* ===== Initial data filled from user's provided list =====
+Chili Powder - 100g -14 / 250- 6 / 1kg-1
+Chili Pieces  - 100g - 13 / 250g -4 / 500 - 1 / 1kg -1 
+Curry Powder - 100g -14 / 250g - 4 / 500g - 1 / 1kg -1
+Rost Curry Powder -100g -14 / 250g -12 
+Paper Powder - 100g - 14 / 250g -3 
+turmanic powder - 100g - 15 / 250g - 3
+*/
+const initialData = [
+  {name:'Chili Powder', g100:14, g250:6, g500:0, kg1:1, other:0},
+  {name:'Chili Pieces', g100:13, g250:4, g500:1, kg1:1, other:0},
+  {name:'Curry Powder', g100:14, g250:4, g500:1, kg1:1, other:0},
+  {name:'Rost Curry Powder', g100:14, g250:12, g500:0, kg1:0, other:0},
+  {name:'Paper Powder', g100:14, g250:3, g500:0, kg1:0, other:0},
+  {name:'Turmanic Powder', g100:15, g250:3, g500:0, kg1:0, other:0}
+];
 
-    const overlay=document.getElementById('langOverlay');
-    const chips=[...document.querySelectorAll('.chip')];
-    const langBtns=[...document.querySelectorAll('.lang-btn')];
+const LS_KEY = 'dulben_spices_stock_v1';
+let stock = [];
 
-    function setLang(l){
-      const dict=I18N[l]||I18N.en;
-      document.documentElement.lang=l;
-      document.querySelectorAll('[data-i18n]').forEach(el=>{
-        const k=el.getAttribute('data-i18n');
-        if(dict[k]) el.textContent=dict[k];
-      });
-      chips.forEach(c=>c.classList.toggle('active',c.dataset.lang===l));
-      localStorage.setItem('dulben_lang',l);
-      // modal texts
-      document.getElementById('modalTitle').textContent=l==='si'?'භාෂාව තෝරන්න':(l==='ta'?'மொழியைத் தேர்ந்தெடுக்கவும்':'Choose your language');
-      document.getElementById('modalSub').textContent=l==='si'?'තේරූ භාෂාව ඉදිරියටත් මතක තබාගනු ඇත.':'ta'===l?'நீங்கள் தேர்ந்தெடுக்கும் மொழி நினைவில் வைக்கப்படும்.':'Your choice will be remembered.';
+/* Utilities */
+function loadFromLocal(){
+  try{
+    const raw = localStorage.getItem(LS_KEY);
+    if(raw){
+      stock = JSON.parse(raw);
+      showMessage('Loaded saved data');
+      return;
     }
+  }catch(e){ console.warn(e); }
+  stock = JSON.parse(JSON.stringify(initialData));
+  showMessage('Loaded initial data');
+}
+function saveToLocal(){
+  localStorage.setItem(LS_KEY, JSON.stringify(stock));
+  const tm = new Date().toLocaleString();
+  document.getElementById('lastSaved').textContent = 'Saved: ' + tm;
+  showMessage('Saved to browser');
+}
+function resetToInitial(){
+  if(confirm('Reset to the original data you provided? This will overwrite saved changes in this browser.')) {
+    stock = JSON.parse(JSON.stringify(initialData));
+    saveToLocal();
+    renderTable();
+  }
+}
+function showMessage(msg){
+  // light ephemeral flash in lastSaved area
+  const el = document.getElementById('lastSaved');
+  el.textContent = msg;
+}
 
-    // Init language
-    const saved=localStorage.getItem('dulben_lang');
-    if(saved){ setLang(saved); }
-    else { overlay.classList.add('show'); }
+/* Rendering */
+function calcTotalRow(r){
+  return (Number(r.g100||0)+Number(r.g250||0)+Number(r.g500||0)+Number(r.kg1||0)+Number(r.other||0));
+}
+function calcGrandTotal(){
+  return stock.reduce((s,r)=>s+calcTotalRow(r),0);
+}
 
-    chips.forEach(c=>c.addEventListener('click',()=>setLang(c.dataset.lang)));
-    langBtns.forEach(b=>b.addEventListener('click',()=>{ setLang(b.dataset.lang); overlay.classList.remove('show'); }));
-  </script>
+function renderTable(filterText=''){
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+  const q = (filterText||'').toLowerCase().trim();
+  stock.forEach((row, idx) => {
+    if(q){
+      const match = row.name.toLowerCase().includes(q) ||
+                    String(row.g100).includes(q) ||
+                    String(row.g250).includes(q) ||
+                    String(row.g500).includes(q) ||
+                    String(row.kg1).includes(q) ||
+                    String(row.other).includes(q);
+      if(!match) return;
+    }
+    const tr = document.createElement('tr');
+
+    // product
+    const tdName = document.createElement('td');
+    tdName.innerHTML = `<strong>${escapeHtml(row.name)}</strong><div class="small muted">${row.name}</div>`;
+    tr.appendChild(tdName);
+
+    // sizes helper to create editable cell
+    ['g100','g250','g500','kg1','other'].forEach((key)=>{
+      const td = document.createElement('td');
+      const span = document.createElement('div');
+      span.className = 'num';
+      span.contentEditable = true;
+      span.dataset.row = idx;
+      span.dataset.key = key;
+      span.spellcheck = false;
+      span.innerText = String(Number(row[key]||0));
+      span.addEventListener('keydown', onNumKeyDown);
+      span.addEventListener('blur', onNumBlur);
+      td.appendChild(span);
+      tr.appendChild(td);
+    });
+
+    // total
+    const tdTotal = document.createElement('td');
+    tdTotal.innerHTML = `<div style="font-weight:700">${calcTotalRow(row)}</div>
+      <div class="row-actions small" style="margin-top:6px">
+        <button class="ghost" title="Duplicate row" onclick="duplicateRow(${idx})">Duplicate</button>
+        <button class="danger" title="Delete row" onclick="deleteRow(${idx})">Delete</button>
+      </div>`;
+    tr.appendChild(tdTotal);
+
+    tbody.appendChild(tr);
+  });
+
+  document.getElementById('grandTotal').textContent = 'Total items: ' + calcGrandTotal();
+}
+
+/* editing handlers */
+function onNumKeyDown(e){
+  if(e.key === 'Enter'){
+    e.preventDefault();
+    e.target.blur();
+  }
+}
+function onNumBlur(e){
+  const el = e.target;
+  const r = Number(el.dataset.row);
+  const key = el.dataset.key;
+  let v = el.innerText.replace(/[^\d-]/g, '').trim();
+  if(v === '') v = '0';
+  const num = parseInt(v,10);
+  if(isNaN(num)){
+    // revert
+    el.innerText = String(Number(stock[r][key]||0));
+    return;
+  }
+  stock[r][key] = num;
+  saveToLocal();
+  renderTable(document.getElementById('search').value);
+}
+
+/* row actions */
+function deleteRow(idx){
+  if(!confirm('Delete "'+stock[idx].name+'" ?')) return;
+  stock.splice(idx,1);
+  saveToLocal();
+  renderTable(document.getElementById('search').value);
+}
+function duplicateRow(idx){
+  const copy = JSON.parse(JSON.stringify(stock[idx]));
+  copy.name = copy.name + ' (copy)';
+  stock.splice(idx+1,0,copy);
+  saveToLocal();
+  renderTable(document.getElementById('search').value);
+}
+
+/* Add form */
+document.getElementById('addBtn').addEventListener('click', ()=>{
+  const name = (document.getElementById('newName').value || '').trim();
+  if(!name){ alert('Enter a product name'); return; }
+  const g100 = Number(document.getElementById('v100').value || 0);
+  const g250 = Number(document.getElementById('v250').value || 0);
+  const g500 = Number(document.getElementById('v500').value || 0);
+  const kg1 = Number(document.getElementById('v1kg').value || 0);
+  const other = Number(document.getElementById('vother').value || 0);
+  stock.push({name, g100, g250, g500, kg1, other});
+  document.getElementById('newName').value = '';
+  document.getElementById('v100').value = '0';
+  document.getElementById('v250').value = '0';
+  document.getElementById('v500').value = '0';
+  document.getElementById('v1kg').value = '0';
+  document.getElementById('vother').value = '0';
+  saveToLocal(); renderTable(document.getElementById('search').value);
+});
+
+/* Search */
+document.getElementById('search').addEventListener('input', (e)=>{
+  renderTable(e.target.value);
+});
+
+/* Buttons */
+document.getElementById('saveBtn').addEventListener('click', ()=>{ saveToLocal(); });
+document.getElementById('resetBtn').addEventListener('click', resetToInitial);
+
+document.getElementById('exportBtn').addEventListener('click', ()=>{
+  const rows = [['Product','100g','250g','500g','1kg','Other','Total']];
+  stock.forEach(r=>{
+    rows.push([r.name,r.g100||0,r.g250||0,r.g500||0,r.kg1||0,r.other||0,calcTotalRow(r)]);
+  });
+  const csv = rows.map(r=>r.map(c=>`"${String(c).replace(/"/g,'""')}"`).join(',')).join('\\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'dulben_spices_stock.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+});
+
+/* Escape helper */
+function escapeHtml(s){ return String(s).replace(/[&<>"']/g, function(m){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]; }); }
+
+/* Init load */
+loadFromLocal();
+renderTable();
+
+/* expose some functions to buttons in markup */
+window.deleteRow = deleteRow;
+window.duplicateRow = duplicateRow;
+
+/* Make table sortable by clicking headers (simple) */
+document.querySelectorAll('th').forEach((th, i) => {
+  if(i===0) { th.style.cursor='pointer'; th.title='Sort by product'; }
+  th.addEventListener('click', ()=>{
+    const keyMap = ['name','g100','g250','g500','kg1','other','__total'];
+    const key = keyMap[i] || 'name';
+    stock.sort((a,b)=>{
+      if(key==='__total') return calcTotalRow(b)-calcTotalRow(a);
+      if(typeof a[key] === 'string') return a[key].localeCompare(b[key]);
+      return (b[key]||0) - (a[key]||0);
+    });
+    renderTable(document.getElementById('search').value);
+  });
+});
+
+/* Print friendly */
+window.addEventListener('keydown', (e)=>{
+  if((e.ctrlKey || e.metaKey) && e.key === 'p'){ /* allow browser print */ }
+});
+</script>
 </body>
 </html>
