@@ -27,4 +27,117 @@
   table{width:100%;border-collapse:collapse;margin-top:12px;font-size:14px;min-width:700px}
   th,td{padding:10px 8px;text-align:left;border-bottom:1px solid var(--border)}
   th{color:var(--muted);font-weight:600;font-size:13px;cursor:pointer}
-  td .num{display:inline-block;min-width:4
+  td .num{display:inline-block;min-width:44px;text-align:right;padding:6px 8px;border-radius:8px;background:#f3f4f6;cursor:pointer}
+  td .num[contenteditable="true"]:focus{outline:2px solid #c7d2fe;background:#e0e7ff}
+  .small{font-size:12px;color:var(--muted)}
+  .totals{margin-top:12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .pill{background:linear-gradient(90deg,var(--accent-2),#84cc16);padding:8px 12px;border-radius:999px;color:#fff;font-weight:700}
+  .muted{color:var(--muted)}
+  .row-actions{display:flex;gap:6px;align-items:center}
+  .danger{background:transparent;border:1px solid var(--border);padding:6px;border-radius:8px;color:#dc2626;cursor:pointer}
+  .add-form{display:grid;grid-template-columns:1fr repeat(5,110px) 120px;gap:8px;align-items:center;margin-top:12px}
+  .input{padding:8px;border-radius:8px;border:1px solid var(--border);background:#fff;color:inherit}
+  @media (max-width:900px){
+    .add-form{grid-template-columns:1fr 1fr; gap:8px}
+  }
+  footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">DS</div>
+      <div>
+        <h1>Dulben Spices — Stock Manager</h1>
+        <p class="lead">Mobile-friendly & Light Theme • Save, Export, Print</p>
+      </div>
+    </div>
+    <div class="tools" style="margin-left:auto">
+      <input id="search" class="search" placeholder="Search product..." />
+      <button class="ghost" id="resetBtn">Reset</button>
+      <button class="ghost" id="saveBtn">Save</button>
+      <button class="btn" id="exportBtn">Export CSV</button>
+    </div>
+  </header>
+
+  <div class="card">
+    <div class="table-wrap">
+      <table id="stockTable">
+        <thead>
+          <tr>
+            <th>Product</th><th>100g</th><th>250g</th><th>500g</th><th>1kg</th><th>Other</th><th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="tableBody"></tbody>
+      </table>
+    </div>
+
+    <div class="totals">
+      <div class="pill" id="grandTotal">Total items: 0</div>
+      <div class="muted" id="lastSaved">Not saved</div>
+    </div>
+
+    <form id="addForm" class="add-form" onsubmit="return false">
+      <input id="newName" class="input" placeholder="New product name" required />
+      <input id="v100" class="input" placeholder="100g" type="number" min="0" value="0"/>
+      <input id="v250" class="input" placeholder="250g" type="number" min="0" value="0"/>
+      <input id="v500" class="input" placeholder="500g" type="number" min="0" value="0"/>
+      <input id="v1kg" class="input" placeholder="1kg" type="number" min="0" value="0"/>
+      <input id="vother" class="input" placeholder="Other" type="number" min="0" value="0"/>
+      <button id="addBtn" class="btn">Add</button>
+    </form>
+  </div>
+
+  <footer>All data stored locally in your browser</footer>
+</div>
+
+<script>
+// same JS as before but shortened for demo
+const initialData = [
+  {name:'Chili Powder', g100:14, g250:6, g500:0, kg1:1, other:0},
+  {name:'Chili Pieces', g100:13, g250:4, g500:1, kg1:1, other:0},
+  {name:'Curry Powder', g100:14, g250:4, g500:1, kg1:1, other:0},
+  {name:'Rost Curry Powder', g100:14, g250:12, g500:0, kg1:0, other:0},
+  {name:'Paper Powder', g100:14, g250:3, g500:0, kg1:0, other:0},
+  {name:'Turmanic Powder', g100:15, g250:3, g500:0, kg1:0, other:0}
+];
+const LS_KEY = 'dulben_spices_light';
+let stock = [];
+
+function load(){ const s=localStorage.getItem(LS_KEY); stock=s?JSON.parse(s):initialData; }
+function save(){ localStorage.setItem(LS_KEY,JSON.stringify(stock)); document.getElementById('lastSaved').textContent='Saved '+new Date().toLocaleTimeString(); }
+function totalRow(r){ return (r.g100+r.g250+r.g500+r.kg1+r.other); }
+function render(){
+  const tb=document.getElementById('tableBody'); tb.innerHTML='';
+  stock.forEach((r,i)=>{
+    tb.innerHTML+=`<tr>
+      <td><b>${r.name}</b></td>
+      ${['g100','g250','g500','kg1','other'].map(k=>`<td><div class="num" contenteditable data-i="${i}" data-k="${k}">${r[k]}</div></td>`).join('')}
+      <td>${totalRow(r)}</td>
+    </tr>`;
+  });
+  document.getElementById('grandTotal').textContent='Total items: '+stock.reduce((s,r)=>s+totalRow(r),0);
+}
+function update(e){
+  if(e.target.classList.contains('num')){
+    const i=+e.target.dataset.i, k=e.target.dataset.k, v=parseInt(e.target.innerText)||0;
+    stock[i][k]=v; save(); render();
+  }
+}
+document.getElementById('tableBody').addEventListener('blur',update,true);
+document.getElementById('addBtn').onclick=()=>{
+  stock.push({name:newName.value,g100:+v100.value,g250:+v250.value,g500:+v500.value,kg1:+v1kg.value,other:+vother.value});
+  save(); render(); return false;
+};
+document.getElementById('saveBtn').onclick=save;
+document.getElementById('resetBtn').onclick=()=>{if(confirm("Reset data?")){stock=[...initialData];save();render();}};
+document.getElementById('exportBtn').onclick=()=>{
+  const rows=[['Product','100g','250g','500g','1kg','Other','Total'],...stock.map(r=>[r.name,r.g100,r.g250,r.g500,r.kg1,r.other,totalRow(r)])];
+  const csv=rows.map(r=>r.join(",")).join("\n"); const blob=new Blob([csv],{type:'text/csv'});
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='dulben_spices.csv'; a.click();
+};
+load(); render();
+</script>
+</body>
+</html>
